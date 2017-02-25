@@ -25,8 +25,6 @@ Fablabs::Application.routes.draw do
       end
     end
 
-    # resources :events
-
     get "verify_email(/:id)", to: "users#verify_email", as: "verify_email"
 
     %w(tos privacy-policy cookie-policy about choose_locale country_guess).each do |action|
@@ -86,7 +84,7 @@ Fablabs::Application.routes.draw do
       end
     end
 
-    get 'events' => 'events#main_index', as: 'events'
+    get 'events' => 'events#index', as: 'events'
     resources :search, only: [:index]
     resources :projects do
       collection do

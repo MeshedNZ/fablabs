@@ -1,8 +1,7 @@
 class EventsController < ApplicationController
 
-  def main_index
-    @events = Event.upcoming.includes(:lab)
-    authorize_action_for @events
+  def index
+    @events = Event.includes(:lab)
   end
 
   def edit
@@ -14,11 +13,6 @@ class EventsController < ApplicationController
   def show
     @event = Event.find(params[:id])
     authorize_action_for @event
-  end
-
-  def index
-    @events = Event.upcoming.includes(:lab).order('starts_at ASC').group_by { |t| t.starts_at.beginning_of_day }#.where('starts_at > ?', Time.now)
-    authorize_action_for Event
   end
 
   def new
@@ -55,14 +49,13 @@ class EventsController < ApplicationController
 private
 
   def event_params
-    params.require(:event).permit!
-    # (
-    #   :name,
-    #   :description,
-    #   :starts_at,
-    #   :ends_at,
-    #   :lab_id
-    # )
+    params.require(:event).permit(
+      :name,
+      :description,
+      :starts_at,
+      :ends_at,
+      :lab_id
+    )
   end
 
 end
